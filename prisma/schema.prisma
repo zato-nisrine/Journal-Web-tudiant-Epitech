@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  REDACTEUR
+  LECTEUR
+}
+
+enum TypeReaction {
+  LIKE
+  LOVE
+  BRAVO
+  INTERESSANT
+}
+
+model User {
+  id           String     @id @default(cuid())
+  nom          String
+  email        String     @unique
+  passwordHash String
+  role         Role       @default(LECTEUR)
+  createdAt    DateTime   @default(now())
+  articles     Article[]
+  commentaires Comment[]
+  reactions    Reaction[]
+
+  @@map("users")
+}
+
+model Category {
+  id       String    @id @default(cuid())
+  nom      String    @unique
+  slug     String    @unique
+  articles Article[]
+
+  @@map("categories")
+}
+
+model Article {
+  id           String     @id @default(cuid())
+  titre        String
+  slug         String     @unique
+  extrait      String
+  contenu      String
+  imageUrl     String?
+  publie       Boolean    @default(false)
+  aLaUne       Boolean    @default(false)
+  vues         Int        @default(0)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  auteur       User       @relation(fields: [auteurId], references: [id], onDelete: Cascade)
+  auteurId     String
+  categorie    Category   @relation(fields: [categorieId], references: [id])
+  categorieId  String
+  commentaires Comment[]
+  reactions    Reaction[]
+
+  @@index([publie, createdAt])
+  @@index([categorieId])
+  @@map("articles")
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  contenu   String
+  createdAt DateTime @default(now())
+  auteur    User     @relation(fields: [auteurId], references: [id], onDelete: Cascade)
+  auteurId  String
+  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  articleId String
+
+  @@index([articleId])
+  @@map("commentaires")
+}
+
+model Reaction {
+  id        String       @id @default(cuid())
+  type      TypeReaction
+  createdAt DateTime     @default(now())
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  article   Article      @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  articleId String
+
+  @@unique([userId, articleId])
+  @@index([articleId])
+  @@map("reactions")
+}

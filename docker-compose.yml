@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: journal-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: journal
+      POSTGRES_PASSWORD: journal_dev_2026
+      POSTGRES_DB: journal_epitech
+    ports:
+      - "5432:5432"
+    volumes:
+      - journal_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U journal -d journal_epitech"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  journal_pgdata:
