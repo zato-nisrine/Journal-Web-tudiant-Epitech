@@ -24,11 +24,11 @@ export function formatDateCourte(date: Date | string): string {
   });
 }
 
-export const REACTIONS: { type: string; emoji: string; label: string }[] = [
-  { type: "LIKE", emoji: "👍", label: "J'aime" },
-  { type: "LOVE", emoji: "❤️", label: "J'adore" },
-  { type: "BRAVO", emoji: "👏", label: "Bravo" },
-  { type: "INTERESSANT", emoji: "💡", label: "Intéressant" },
+export const REACTIONS: { type: string; label: string }[] = [
+  { type: "LIKE", label: "J'aime" },
+  { type: "LOVE", label: "J'adore" },
+  { type: "BRAVO", label: "Bravo" },
+  { type: "INTERESSANT", label: "Intéressant" },
 ];
 
 export const LABELS_ROLES: Record<string, string> = {
