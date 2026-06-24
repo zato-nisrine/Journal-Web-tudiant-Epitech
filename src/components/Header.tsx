@@ -3,6 +3,7 @@ import { getCurrentUser, peutRediger } from "@/lib/auth";
 import ThemeToggle from "./ThemeToggle";
 import BoutonDeconnexion from "./BoutonDeconnexion";
 import MenuMobile from "./MenuMobile";
+import LogoEpitech from "./LogoEpitech";
 
 export default async function Header() {
   const utilisateur = await getCurrentUser();
@@ -12,32 +13,68 @@ export default async function Header() {
     { href: "/articles", label: "Articles" },
     { href: "/categories", label: "Catégories" },
     ...(utilisateur && peutRediger(utilisateur.role)
-      ? [{ href: "/admin", label: "Administration" }]
+      ? [{ href: "/admin", label: "Rédaction" }]
       : []),
   ];
 
-  return (
-    <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-700 dark:bg-slate-900/90">
-      <div className="relative mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4">
-        <div className="flex items-center gap-2">
-          <MenuMobile liens={liens} />
-          <Link href="/" className="flex items-center gap-2">
-            <span className="rounded-lg bg-blue-600 px-2 py-1 text-sm font-black tracking-tight text-white">
-              JE
-            </span>
-            <span className="text-lg font-bold tracking-tight">
-              Journal <span className="text-blue-600 dark:text-blue-400">Epitech</span>
-            </span>
-          </Link>
-        </div>
+  const aujourdhui = new Date().toLocaleDateString("fr-FR", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 
-        <nav className="hidden sm:block">
-          <ul className="flex items-center gap-1">
+  return (
+    <header className="sticky top-0 z-40 border-b-2 border-ink bg-paper/95 backdrop-blur">
+      {/* Bandeau supérieur : date + compte */}
+      <div className="border-b border-rule">
+        <div className="mx-auto flex h-9 max-w-6xl items-center justify-between gap-4 px-4 text-xs text-muted">
+          <div className="flex items-center gap-2">
+            <LogoEpitech className="h-3 w-auto text-ink" />
+            <span className="hidden capitalize sm:inline">· {aujourdhui}</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            {utilisateur ? (
+              <div className="flex items-center gap-3">
+                <span
+                  className="hidden max-w-32 truncate font-medium text-ink md:inline"
+                  title={utilisateur.nom}
+                >
+                  {utilisateur.nom}
+                </span>
+                <BoutonDeconnexion />
+              </div>
+            ) : (
+              <div className="flex items-center gap-3">
+                <Link href="/connexion" className="font-medium hover:text-accent">
+                  Connexion
+                </Link>
+                <Link
+                  href="/inscription"
+                  className="font-semibold text-accent hover:text-accent-hover"
+                >
+                  S&apos;inscrire
+                </Link>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Masthead + navigation */}
+      <div className="mx-auto flex max-w-6xl items-center gap-4 px-4 py-3">
+        <MenuMobile liens={liens} />
+        <Link href="/" className="font-display text-2xl font-black tracking-tight sm:text-3xl">
+          Le Journal <span className="text-accent">Epitech</span>
+        </Link>
+        <nav className="ml-auto hidden sm:block">
+          <ul className="flex items-center gap-6">
             {liens.map((lien) => (
               <li key={lien.href}>
                 <Link
                   href={lien.href}
-                  className="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+                  className="kicker text-xs text-ink transition-colors hover:text-accent"
                 >
                   {lien.label}
                 </Link>
@@ -45,36 +82,6 @@ export default async function Header() {
             ))}
           </ul>
         </nav>
-
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
-          {utilisateur ? (
-            <div className="flex items-center gap-2">
-              <span
-                className="hidden max-w-32 truncate text-sm font-medium md:inline"
-                title={utilisateur.nom}
-              >
-                {utilisateur.nom}
-              </span>
-              <BoutonDeconnexion />
-            </div>
-          ) : (
-            <div className="flex items-center gap-2">
-              <Link
-                href="/connexion"
-                className="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
-              >
-                Connexion
-              </Link>
-              <Link
-                href="/inscription"
-                className="rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-blue-700"
-              >
-                S&apos;inscrire
-              </Link>
-            </div>
-          )}
-        </div>
       </div>
     </header>
   );
