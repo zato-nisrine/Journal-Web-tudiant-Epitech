@@ -3,20 +3,40 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --paper: #f2f4f8; /* blanc Epitech */
+  --surface: #ffffff; /* feuille */
+  --ink: #181818; /* noir Epitech */
+  --muted: #5f6672; /* gris froid */
+  --rule: #d5dae3; /* filets */
+  --accent: #013afb; /* bleu Epitech */
+  --accent-hover: #0030cf;
 }
 
 .dark {
-  --background: #0b1120;
-  --foreground: #e2e8f0;
+  --paper: #0b0e17; /* bleu-nuit profond */
+  --surface: #131726;
+  --ink: #f2f4f8;
+  --muted: #97a0b2;
+  --rule: #232a3d;
+  --accent: #5a86ff; /* bleu Epitech éclairci pour le fond sombre */
+  --accent-hover: #7c9eff;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+
+  --color-background: var(--paper);
+  --color-foreground: var(--ink);
+
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+  --font-serif: var(--font-serif);
 }
 
 html {
@@ -24,13 +44,44 @@ html {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans), system-ui, Arial, sans-serif;
 }
 
-/* Contenu d'article : paragraphes espacés et lisibles */
+/* Titres : serif de presse */
+h1,
+h2,
+h3,
+h4,
+.font-display {
+  font-family: var(--font-display), Georgia, "Times New Roman", serif;
+}
+
+/* Filet décoratif sous un titre de rubrique */
+.kicker {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+}
+
+/* Contenu d'article : serif de lecture, paragraphes aérés */
+.prose-article {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.08rem;
+}
 .prose-article p {
-  margin-bottom: 1.25rem;
-  line-height: 1.8;
+  margin-bottom: 1.3rem;
+  line-height: 1.85;
+}
+/* Lettrine sur le premier paragraphe */
+.prose-article > p:first-of-type::first-letter {
+  font-family: var(--font-display), Georgia, serif;
+  float: left;
+  font-size: 3.4rem;
+  line-height: 0.8;
+  font-weight: 800;
+  padding: 0.1rem 0.55rem 0 0;
+  color: var(--accent);
 }
