@@ -14,7 +14,7 @@ export default function MenuMobile({ liens }: { liens: Lien[] }) {
         onClick={() => setOuvert(!ouvert)}
         aria-label="Ouvrir le menu"
         aria-expanded={ouvert}
-        className="rounded-lg p-2 hover:bg-slate-200 dark:hover:bg-slate-700"
+        className="p-2 text-ink hover:text-accent"
       >
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
           {ouvert ? (
@@ -25,14 +25,14 @@ export default function MenuMobile({ liens }: { liens: Lien[] }) {
         </svg>
       </button>
       {ouvert && (
-        <nav className="absolute left-0 right-0 top-full z-50 border-b border-slate-200 bg-white px-4 py-3 shadow-lg dark:border-slate-700 dark:bg-slate-900">
-          <ul className="flex flex-col gap-1">
+        <nav className="absolute left-0 right-0 top-full z-50 border-y-2 border-ink bg-paper px-4 py-3">
+          <ul className="flex flex-col divide-y divide-rule">
             {liens.map((lien) => (
               <li key={lien.href}>
                 <Link
                   href={lien.href}
                   onClick={() => setOuvert(false)}
-                  className="block rounded-lg px-3 py-2 font-medium hover:bg-slate-100 dark:hover:bg-slate-800"
+                  className="kicker block py-3 text-sm text-ink hover:text-accent"
                 >
                   {lien.label}
                 </Link>
