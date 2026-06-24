@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 type Categorie = { id: string; nom: string };
@@ -17,7 +18,7 @@ type ArticleExistant = {
 };
 
 const classChamp =
-  "w-full rounded-xl border border-slate-300 bg-white p-3 text-sm outline-none transition-colors focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:border-slate-600 dark:bg-slate-800 dark:focus:ring-blue-900";
+  "w-full border border-ink bg-surface p-3 text-sm outline-none transition-colors focus:border-accent focus:ring-1 focus:ring-accent";
 
 export default function ArticleForm({
   categories,
@@ -38,9 +39,34 @@ export default function ArticleForm({
   });
   const [erreur, setErreur] = useState("");
   const [envoi, setEnvoi] = useState(false);
+  const [uploadEnCours, setUploadEnCours] = useState(false);
+  const [erreurImage, setErreurImage] = useState("");
 
   function champ<K extends keyof typeof valeurs>(cle: K, valeur: (typeof valeurs)[K]) {
     setValeurs((v) => ({ ...v, [cle]: valeur }));
+  }
+
+  async function televerser(e: React.ChangeEvent<HTMLInputElement>) {
+    const fichier = e.target.files?.[0];
+    if (!fichier) return;
+    setErreurImage("");
+    setUploadEnCours(true);
+    try {
+      const data = new FormData();
+      data.append("fichier", fichier);
+      const res = await fetch("/api/upload", { method: "POST", body: data });
+      const json = await res.json();
+      if (!res.ok) {
+        setErreurImage(json.erreur ?? "Le téléversement a échoué");
+        return;
+      }
+      champ("imageUrl", json.url);
+    } catch {
+      setErreurImage("Le téléversement a échoué");
+    } finally {
+      setUploadEnCours(false);
+      e.target.value = ""; // permet de re-sélectionner le même fichier
+    }
   }
 
   async function enregistrer(e: React.FormEvent) {
@@ -89,7 +115,7 @@ export default function ArticleForm({
 
       <div>
         <label htmlFor="extrait" className="mb-1 block text-sm font-semibold">
-          Extrait <span className="font-normal text-slate-400">(affiché sur les cartes, 300 caractères max)</span>
+          Extrait <span className="font-normal text-muted">(affiché sur les cartes, 300 caractères max)</span>
         </label>
         <textarea
           id="extrait"
@@ -106,7 +132,7 @@ export default function ArticleForm({
 
       <div>
         <label htmlFor="contenu" className="mb-1 block text-sm font-semibold">
-          Contenu <span className="font-normal text-slate-400">(séparez les paragraphes par une ligne vide)</span>
+          Contenu <span className="font-normal text-muted">(séparez les paragraphes par une ligne vide)</span>
         </label>
         <textarea
           id="contenu"
@@ -122,17 +148,42 @@ export default function ArticleForm({
 
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
-          <label htmlFor="imageUrl" className="mb-1 block text-sm font-semibold">
-            Image de couverture <span className="font-normal text-slate-400">(URL, optionnelle)</span>
+          <label className="mb-1 block text-sm font-semibold">
+            Image de couverture <span className="font-normal text-muted">(optionnelle)</span>
           </label>
-          <input
-            id="imageUrl"
-            type="url"
-            value={valeurs.imageUrl}
-            onChange={(e) => champ("imageUrl", e.target.value)}
-            placeholder="https://…"
-            className={classChamp}
-          />
+          {valeurs.imageUrl ? (
+            <div className="flex items-center gap-4">
+              <Image
+                src={valeurs.imageUrl}
+                alt="Aperçu de la couverture"
+                width={128}
+                height={80}
+                unoptimized
+                className="h-20 w-32 border border-ink object-cover"
+              />
+              <button
+                type="button"
+                onClick={() => champ("imageUrl", "")}
+                className="text-sm font-medium text-accent hover:underline"
+              >
+                Retirer l&apos;image
+              </button>
+            </div>
+          ) : (
+            <label className="flex cursor-pointer items-center justify-center border border-dashed border-ink bg-surface px-4 py-6 text-center text-sm text-muted transition-colors hover:border-accent hover:text-accent">
+              <input
+                type="file"
+                accept="image/png,image/jpeg,image/webp,image/gif"
+                onChange={televerser}
+                disabled={uploadEnCours}
+                className="hidden"
+              />
+              {uploadEnCours
+                ? "Téléversement…"
+                : "Choisir une image (JPG, PNG, WebP, GIF — 5 Mo max)"}
+            </label>
+          )}
+          {erreurImage && <p className="mt-1 text-sm text-accent">{erreurImage}</p>}
         </div>
         <div>
           <label htmlFor="categorie" className="mb-1 block text-sm font-semibold">
@@ -160,7 +211,7 @@ export default function ArticleForm({
             type="checkbox"
             checked={valeurs.publie}
             onChange={(e) => champ("publie", e.target.checked)}
-            className="h-4 w-4 accent-blue-600"
+            className="h-4 w-4 accent-[var(--accent)]"
           />
           Publier immédiatement
         </label>
@@ -169,14 +220,14 @@ export default function ArticleForm({
             type="checkbox"
             checked={valeurs.aLaUne}
             onChange={(e) => champ("aLaUne", e.target.checked)}
-            className="h-4 w-4 accent-amber-500"
+            className="h-4 w-4 accent-[var(--accent)]"
           />
-          ⭐ Mettre à la une
+          Mettre à la une
         </label>
       </div>
 
       {erreur && (
-        <p className="rounded-lg bg-red-50 p-3 text-sm font-medium text-red-700 dark:bg-red-900/30 dark:text-red-300">
+        <p className="border-l-2 border-accent bg-accent/5 p-3 text-sm font-medium text-accent">
           {erreur}
         </p>
       )}
@@ -185,14 +236,14 @@ export default function ArticleForm({
         <button
           type="submit"
           disabled={envoi}
-          className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-700 disabled:opacity-50"
+          className="kicker bg-ink px-5 py-2.5 text-xs text-paper transition-colors hover:bg-accent disabled:opacity-50"
         >
           {envoi ? "Enregistrement…" : article ? "Enregistrer les modifications" : "Créer l'article"}
         </button>
         <button
           type="button"
           onClick={() => router.back()}
-          className="rounded-lg px-4 py-2.5 text-sm font-medium text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800"
+          className="text-sm font-medium text-muted hover:text-accent"
         >
           Annuler
         </button>
