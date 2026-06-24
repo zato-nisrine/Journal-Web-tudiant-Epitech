@@ -52,7 +52,6 @@ model Article {
   imageUrl     String?
   publie       Boolean    @default(false)
   aLaUne       Boolean    @default(false)
-  vues         Int        @default(0)
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   auteur       User       @relation(fields: [auteurId], references: [id], onDelete: Cascade)
