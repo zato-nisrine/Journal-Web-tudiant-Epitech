@@ -25,15 +25,15 @@ export default async function GestionArticles() {
 
   return (
     <div>
-      <h2 className="text-lg font-bold">
+      <h2 className="font-display text-xl font-bold">
         {utilisateur.role === "ADMIN" ? "Tous les articles" : "Mes articles"}{" "}
-        <span className="text-slate-400">({articles.length})</span>
+        <span className="text-muted">({articles.length})</span>
       </h2>
 
-      <div className="mt-4 overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-700">
-        <table className="w-full min-w-[700px] bg-white text-sm dark:bg-slate-800">
+      <div className="mt-4 overflow-x-auto border border-ink">
+        <table className="w-full min-w-[700px] bg-surface text-sm">
           <thead>
-            <tr className="border-b border-slate-200 text-left text-xs uppercase tracking-wide text-slate-400 dark:border-slate-700">
+            <tr className="kicker border-b-2 border-ink text-left text-[10px] text-muted">
               <th className="px-4 py-3">Titre</th>
               <th className="px-4 py-3">Catégorie</th>
               <th className="px-4 py-3">Auteur</th>
@@ -45,46 +45,35 @@ export default async function GestionArticles() {
           </thead>
           <tbody>
             {articles.map((a) => (
-              <tr
-                key={a.id}
-                className="border-b border-slate-100 last:border-0 dark:border-slate-700/50"
-              >
+              <tr key={a.id} className="border-b border-rule last:border-0">
                 <td className="max-w-64 px-4 py-3">
                   <Link
                     href={`/articles/${a.slug}`}
-                    className="line-clamp-1 font-semibold hover:text-blue-600 hover:underline dark:hover:text-blue-400"
+                    className="line-clamp-1 font-semibold hover:text-accent hover:underline"
                   >
-                    {a.aLaUne && "⭐ "}
+                    {a.aLaUne && <span className="text-accent">★ </span>}
                     {a.titre}
                   </Link>
                 </td>
-                <td className="px-4 py-3 text-slate-500 dark:text-slate-400">
-                  {a.categorie.nom}
-                </td>
-                <td className="px-4 py-3 text-slate-500 dark:text-slate-400">
-                  {a.auteur.nom}
-                </td>
+                <td className="px-4 py-3 text-muted">{a.categorie.nom}</td>
+                <td className="px-4 py-3 text-muted">{a.auteur.nom}</td>
                 <td className="px-4 py-3">
                   {a.publie ? (
-                    <span className="rounded-full bg-green-100 px-2 py-0.5 text-xs font-bold text-green-700 dark:bg-green-900/40 dark:text-green-300">
-                      Publié
-                    </span>
+                    <span className="kicker text-[10px] text-accent">Publié</span>
                   ) : (
-                    <span className="rounded-full bg-orange-100 px-2 py-0.5 text-xs font-bold text-orange-700 dark:bg-orange-900/40 dark:text-orange-300">
-                      Brouillon
-                    </span>
+                    <span className="kicker text-[10px] text-muted">Brouillon</span>
                   )}
                 </td>
-                <td className="whitespace-nowrap px-4 py-3 text-xs text-slate-400">
-                  👁 {a.vues} · 💬 {a._count.commentaires} · ❤️ {a._count.reactions}
+                <td className="whitespace-nowrap px-4 py-3 text-xs text-muted">
+                  {a._count.commentaires} comm. · {a._count.reactions} réac.
                 </td>
-                <td className="whitespace-nowrap px-4 py-3 text-slate-500 dark:text-slate-400">
+                <td className="whitespace-nowrap px-4 py-3 text-muted">
                   {formatDateCourte(a.createdAt)}
                 </td>
                 <td className="whitespace-nowrap px-4 py-3 text-right">
                   <Link
                     href={`/admin/articles/${a.id}/modifier`}
-                    className="rounded-lg px-2.5 py-1.5 text-xs font-semibold text-blue-600 transition-colors hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-900/30"
+                    className="text-xs font-semibold text-accent transition-colors hover:underline"
                   >
                     Modifier
                   </Link>
@@ -94,9 +83,9 @@ export default async function GestionArticles() {
             ))}
             {articles.length === 0 && (
               <tr>
-                <td colSpan={7} className="px-4 py-10 text-center text-slate-400">
+                <td colSpan={7} className="px-4 py-10 text-center text-muted">
                   Aucun article pour le moment.{" "}
-                  <Link href="/admin/articles/nouveau" className="font-semibold text-blue-600 hover:underline dark:text-blue-400">
+                  <Link href="/admin/articles/nouveau" className="font-semibold text-accent hover:underline">
                     Écrire le premier
                   </Link>
                 </td>
