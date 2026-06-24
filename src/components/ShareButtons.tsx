@@ -40,32 +40,30 @@ export default function ShareButtons({ titre }: { titre: string }) {
     },
     {
       label: "WhatsApp",
-      icone: "🟢",
+      icone: "wa",
       action: () => ouvrir(`https://wa.me/?text=${t}%20${u()}`),
     },
   ];
 
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <span className="text-sm font-semibold text-slate-500 dark:text-slate-400">
-        Partager :
-      </span>
+      <span className="kicker text-xs text-muted">Partager</span>
       {reseaux.map((r) => (
         <button
           key={r.label}
           onClick={r.action}
           title={`Partager sur ${r.label}`}
           aria-label={`Partager sur ${r.label}`}
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-sm font-bold text-slate-600 transition-colors hover:border-blue-300 hover:bg-blue-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+          className="flex h-9 w-9 items-center justify-center border border-ink bg-surface text-sm font-bold text-ink transition-colors hover:bg-ink hover:text-paper"
         >
           {r.icone}
         </button>
       ))}
       <button
         onClick={copierLien}
-        className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:border-blue-300 hover:bg-blue-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+        className="border border-ink bg-surface px-3 py-1.5 text-sm font-medium text-ink transition-colors hover:bg-ink hover:text-paper"
       >
-        {copie ? "✓ Lien copié !" : "🔗 Copier le lien"}
+        {copie ? "Lien copié ✓" : "Copier le lien"}
       </button>
     </div>
   );
