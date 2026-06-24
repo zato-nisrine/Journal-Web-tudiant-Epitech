@@ -26,8 +26,8 @@ export default async function GestionUtilisateurs() {
 
   return (
     <div>
-      <h2 className="text-lg font-bold">
-        Utilisateurs <span className="text-slate-400">({utilisateurs.length})</span>
+      <h2 className="font-display text-xl font-bold">
+        Utilisateurs <span className="text-muted">({utilisateurs.length})</span>
       </h2>
       <div className="mt-4">
         <TableUtilisateurs utilisateurs={utilisateurs} monId={utilisateur.id} />
