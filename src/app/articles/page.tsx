@@ -70,7 +70,6 @@ export default async function PageArticles({
         extrait: true,
         imageUrl: true,
         aLaUne: true,
-        vues: true,
         createdAt: true,
         auteur: { select: { id: true, nom: true } },
         categorie: { select: { id: true, nom: true, slug: true } },
@@ -96,14 +95,14 @@ export default async function PageArticles({
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
-      <h1 className="text-3xl font-black tracking-tight">
+      <h1 className="border-b-2 border-ink pb-3 text-4xl font-black">
         {categorieActive ? categorieActive.nom : "Tous les articles"}
       </h1>
-      <p className="mt-2 text-slate-500 dark:text-slate-400">
+      <p className="mt-3 text-sm text-muted">
         {total} article{total > 1 ? "s" : ""}
         {q && (
           <>
-            {" "}pour la recherche « <span className="font-semibold">{q}</span> »
+            {" "}pour la recherche « <span className="font-semibold text-ink">{q}</span> »
           </>
         )}
       </p>
@@ -115,13 +114,11 @@ export default async function PageArticles({
       </div>
 
       {/* Filtres par catégorie */}
-      <div className="mt-5 flex flex-wrap gap-2">
+      <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 border-y border-rule py-3">
         <Link
           href={lienFiltre({ categorie: undefined })}
-          className={`rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors ${
-            !categorie
-              ? "bg-blue-600 text-white"
-              : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+          className={`kicker text-xs transition-colors ${
+            !categorie ? "text-accent" : "text-muted hover:text-ink"
           }`}
         >
           Toutes
@@ -130,10 +127,8 @@ export default async function PageArticles({
           <Link
             key={c.id}
             href={lienFiltre({ categorie: c.slug })}
-            className={`rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors ${
-              categorie === c.slug
-                ? "bg-blue-600 text-white"
-                : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+            className={`kicker text-xs transition-colors ${
+              categorie === c.slug ? "text-accent" : "text-muted hover:text-ink"
             }`}
           >
             {c.nom}
@@ -142,16 +137,16 @@ export default async function PageArticles({
       </div>
 
       {/* Tri */}
-      <div className="mt-4 flex items-center gap-2 text-sm">
-        <span className="text-slate-400">Trier par :</span>
+      <div className="mt-4 flex items-center gap-4 text-sm">
+        <span className="kicker text-xs text-muted">Trier</span>
         {TRIS.map((t) => (
           <Link
             key={t.valeur}
             href={lienFiltre({ tri: t.valeur })}
-            className={`rounded-lg px-2.5 py-1 font-medium transition-colors ${
+            className={`font-medium transition-colors ${
               tri === t.valeur
-                ? "bg-slate-200 text-slate-900 dark:bg-slate-700 dark:text-white"
-                : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
+                ? "text-ink underline decoration-accent decoration-2 underline-offset-4"
+                : "text-muted hover:text-ink"
             }`}
           >
             {t.label}
@@ -159,21 +154,21 @@ export default async function PageArticles({
         ))}
       </div>
 
-      <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {articles.map((article) => (
           <ArticleCard key={article.id} article={article} />
         ))}
       </div>
 
       {articles.length === 0 && (
-        <div className="mt-12 rounded-2xl border border-dashed border-slate-300 p-12 text-center dark:border-slate-600">
-          <p className="text-lg font-semibold">Aucun article trouvé</p>
-          <p className="mt-1 text-sm text-slate-400">
+        <div className="mt-12 border border-dashed border-rule p-12 text-center">
+          <p className="font-display text-xl font-bold">Aucun article trouvé</p>
+          <p className="mt-1 text-sm text-muted">
             Essayez d&apos;autres mots-clés ou retirez les filtres.
           </p>
           <Link
             href="/articles"
-            className="mt-4 inline-block rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+            className="kicker mt-4 inline-block bg-ink px-4 py-2 text-xs text-paper hover:bg-accent"
           >
             Voir tous les articles
           </Link>
