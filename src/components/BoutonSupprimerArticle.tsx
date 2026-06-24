@@ -32,7 +32,7 @@ export default function BoutonSupprimerArticle({
     <button
       onClick={supprimer}
       disabled={enCours}
-      className="rounded-lg px-2.5 py-1.5 text-xs font-semibold text-red-600 transition-colors hover:bg-red-50 disabled:opacity-50 dark:hover:bg-red-900/30"
+      className="ml-3 text-xs font-semibold text-accent transition-colors hover:underline disabled:opacity-50"
     >
       {enCours ? "…" : "Supprimer"}
     </button>
