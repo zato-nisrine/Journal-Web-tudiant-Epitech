@@ -15,7 +15,6 @@ const selectionListe = {
   extrait: true,
   imageUrl: true,
   aLaUne: true,
-  vues: true,
   createdAt: true,
   auteur: { select: { id: true, nom: true } },
   categorie: { select: { id: true, nom: true, slug: true } },
@@ -43,19 +42,16 @@ export default async function Accueil() {
   });
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10">
-      {/* Bandeau d'introduction + recherche */}
-      <section className="text-center">
-        <h1 className="text-3xl font-black tracking-tight sm:text-5xl">
-          La vie étudiante d&apos;Epitech,
-          <br />
-          <span className="text-blue-600 dark:text-blue-400">racontée par ses étudiants.</span>
-        </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-slate-500 dark:text-slate-400">
-          Actualités de l&apos;école, événements, interviews, projets et bons plans :
-          tout ce qui fait vibrer le campus, au même endroit.
+    <div className="mx-auto max-w-6xl px-4 py-8">
+      {/* Devise du journal + recherche */}
+      <section className="flex flex-col items-center gap-4 border-b-2 border-ink pb-6 text-center">
+        <p className="kicker text-[11px] text-muted">
+          Le journal étudiant — actualités · campus · culture
         </p>
-        <div className="mt-6 flex justify-center">
+        <p className="max-w-2xl font-display text-lg italic text-muted">
+          « La vie étudiante d&apos;Epitech, racontée par ses étudiants. »
+        </p>
+        <div className="flex w-full justify-center">
           <Suspense fallback={null}>
             <SearchBar />
           </Suspense>
@@ -64,12 +60,13 @@ export default async function Accueil() {
 
       {/* Article à la une */}
       {aLaUne && (
-        <section className="mt-12" aria-label="Article à la une">
+        <section className="mt-8 border-b-2 border-ink pb-8" aria-label="Article à la une">
+          <p className="kicker mb-4 text-xs text-accent">À la une</p>
           <Link
             href={`/articles/${aLaUne.slug}`}
-            className="group grid overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-lg md:grid-cols-2 dark:border-slate-700 dark:bg-slate-800"
+            className="group grid items-center gap-6 md:grid-cols-2"
           >
-            <div className="relative aspect-[1.9] md:aspect-auto md:min-h-72">
+            <div className="relative aspect-[1.9] overflow-hidden bg-rule md:order-2">
               {aLaUne.imageUrl ? (
                 <Image
                   src={aLaUne.imageUrl}
@@ -77,30 +74,23 @@ export default async function Accueil() {
                   fill
                   priority
                   sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="object-cover grayscale-[15%] transition-all duration-500 group-hover:grayscale-0"
                 />
               ) : (
-                <div className="flex h-full items-center justify-center bg-gradient-to-br from-blue-500 to-indigo-700" />
+                <div className="flex h-full items-center justify-center font-display text-6xl font-black text-muted/40">
+                  JE
+                </div>
               )}
             </div>
-            <div className="flex flex-col justify-center p-8">
-              <div className="flex items-center gap-2 text-xs">
-                <span className="rounded-full bg-amber-400 px-2.5 py-0.5 font-bold text-amber-950">
-                  ⭐ À la une
-                </span>
-                <span className="rounded-full bg-blue-50 px-2.5 py-0.5 font-semibold text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">
-                  {aLaUne.categorie.nom}
-                </span>
-              </div>
-              <h2 className="mt-4 text-2xl font-bold leading-tight transition-colors group-hover:text-blue-600 sm:text-3xl dark:group-hover:text-blue-400">
+            <div className="md:order-1">
+              <p className="kicker text-[11px] text-accent">{aLaUne.categorie.nom}</p>
+              <h2 className="mt-2 text-3xl font-black leading-tight transition-colors group-hover:text-accent sm:text-4xl">
                 {aLaUne.titre}
               </h2>
-              <p className="mt-3 line-clamp-3 text-slate-500 dark:text-slate-400">
-                {aLaUne.extrait}
-              </p>
-              <p className="mt-5 text-sm text-slate-400">
-                {aLaUne.auteur.nom} · {formatDate(aLaUne.createdAt)} · 💬{" "}
-                {aLaUne._count.commentaires} · ❤️ {aLaUne._count.reactions}
+              <p className="mt-3 text-lg leading-relaxed text-muted">{aLaUne.extrait}</p>
+              <p className="mt-4 text-sm text-muted">
+                Par <span className="font-medium text-ink">{aLaUne.auteur.nom}</span> ·{" "}
+                {formatDate(aLaUne.createdAt)}
               </p>
             </div>
           </Link>
@@ -108,40 +98,35 @@ export default async function Accueil() {
       )}
 
       {/* Derniers articles */}
-      <section className="mt-14" aria-label="Derniers articles">
-        <div className="flex items-baseline justify-between">
-          <h2 className="text-2xl font-bold">Derniers articles</h2>
-          <Link
-            href="/articles"
-            className="text-sm font-semibold text-blue-600 hover:underline dark:text-blue-400"
-          >
+      <section className="mt-8" aria-label="Derniers articles">
+        <div className="mb-6 flex items-baseline justify-between border-b border-rule pb-2">
+          <h2 className="kicker text-sm">Derniers articles</h2>
+          <Link href="/articles" className="kicker text-xs text-accent hover:text-accent-hover">
             Tout voir →
           </Link>
         </div>
-        <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {recents.map((article) => (
             <ArticleCard key={article.id} article={article} />
           ))}
         </div>
         {recents.length === 0 && !aLaUne && (
-          <p className="mt-6 text-slate-400">Aucun article publié pour le moment.</p>
+          <p className="mt-6 text-muted">Aucun article publié pour le moment.</p>
         )}
       </section>
 
       {/* Catégories */}
-      <section className="mt-14" aria-label="Catégories">
-        <h2 className="text-2xl font-bold">Explorer par catégorie</h2>
-        <div className="mt-6 flex flex-wrap gap-3">
+      <section className="mt-12 border-t-2 border-ink pt-6" aria-label="Catégories">
+        <h2 className="kicker mb-4 text-sm">Explorer par rubrique</h2>
+        <div className="flex flex-wrap gap-x-6 gap-y-2">
           {categories.map((c) => (
             <Link
               key={c.id}
               href={`/articles?categorie=${c.slug}`}
-              className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium transition-colors hover:border-blue-400 hover:bg-blue-50 hover:text-blue-700 dark:border-slate-600 dark:bg-slate-800 dark:hover:bg-slate-700 dark:hover:text-blue-300"
+              className="group inline-flex items-baseline gap-1.5 text-sm transition-colors hover:text-accent"
             >
-              {c.nom}
-              <span className="ml-1.5 text-xs text-slate-400">
-                {c._count.articles}
-              </span>
+              <span className="font-medium">{c.nom}</span>
+              <span className="text-xs text-muted">({c._count.articles})</span>
             </Link>
           ))}
         </div>
