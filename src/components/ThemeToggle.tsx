@@ -13,10 +13,10 @@ export default function ThemeToggle() {
       onClick={basculer}
       aria-label="Changer de thème"
       title="Changer de thème"
-      className="rounded-full p-2 text-lg leading-none transition-colors hover:bg-slate-200 dark:hover:bg-slate-700"
+      className="kicker p-1 text-[11px] leading-none text-muted transition-colors hover:text-accent"
     >
-      <span className="dark:hidden">🌙</span>
-      <span className="hidden dark:inline">☀️</span>
+      <span className="dark:hidden">Nuit</span>
+      <span className="hidden dark:inline">Jour</span>
     </button>
   );
 }
