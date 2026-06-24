@@ -33,11 +33,14 @@ export const articleSchema = z.object({
     .string()
     .trim()
     .min(50, "Le contenu doit contenir au moins 50 caractères"),
+  // Accepte un chemin local téléversé (/uploads/…) ou une URL absolue, ou vide
   imageUrl: z
     .string()
     .trim()
-    .url("URL d'image invalide")
-    .or(z.literal(""))
+    .refine(
+      (v) => v === "" || v.startsWith("/uploads/") || /^https?:\/\//.test(v),
+      "Image invalide"
+    )
     .optional(),
   categorieId: z.string().min(1, "La catégorie est requise"),
   publie: z.boolean().optional().default(false),
