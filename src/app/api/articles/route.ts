@@ -15,7 +15,6 @@ const selectionListe = {
   imageUrl: true,
   publie: true,
   aLaUne: true,
-  vues: true,
   createdAt: true,
   auteur: { select: { id: true, nom: true } },
   categorie: { select: { id: true, nom: true, slug: true } },
