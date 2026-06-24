@@ -14,7 +14,7 @@ interviews, projets et vie étudiante, avec commentaires, réactions et recherch
 - **Interactions** : commentaires, 4 réactions (👍 ❤️ 👏 💡), partage (X, Facebook, LinkedIn, WhatsApp, copie de lien)
 - **Recherche & filtres** : plein texte (titre/extrait/contenu), filtre par catégorie, tri récent/populaire/commenté, pagination
 - **Administration** : tableau de bord avec statistiques, gestion des articles, gestion des utilisateurs et des rôles
-- **Bonus** : mode sombre, compteur de vues, articles similaires, design responsive mobile/PC
+- **Bonus** : mode sombre, articles similaires, design responsive mobile/PC
 
 ## 🛠 Stack technique
 
@@ -50,18 +50,16 @@ npm run dev
 
 Le site est disponible sur [http://localhost:3000](http://localhost:3000).
 
-### Comptes de démonstration
+### Comptes initiaux
 
-Mot de passe commun : `Password123!`
+Le seed crée uniquement les catégories et deux comptes (aucune donnée de démonstration) :
 
-| E-mail                | Rôle          |
-| --------------------- | ------------- |
-| `nisrine@epitech.eu`  | Administrateur |
-| `brandon@epitech.eu`  | Rédacteur     |
-| `justice@epitech.eu`  | Rédacteur     |
-| `theophore@epitech.eu`| Rédacteur     |
-| `harys@epitech.eu`    | Rédacteur     |
-| `lecteur@epitech.eu`  | Lecteur       |
+| E-mail                     | Mot de passe     | Rôle                          |
+| -------------------------- | ---------------- | ----------------------------- |
+| `nisrine.zato@epitech.eu`  | `Freeproject123` | Administrateur                |
+| `jury@epitech.eu`          | `JuryDemo2026`   | Administrateur (évaluation)   |
+
+Le compte `jury@epitech.eu` est destiné à l'évaluation du projet par le jury.
 
 ## 📁 Structure du projet
 
@@ -111,12 +109,14 @@ npm run db:studio    # Interface graphique de la base
 
 ## ☁️ Déploiement
 
-Le projet se déploie tel quel sur **Vercel** (ou Render/Railway) :
+Le projet se déploie sur **Vercel** (ou Render/Railway) :
 
-1. Créer une base PostgreSQL managée (Neon, Supabase, Railway…)
-2. Définir les variables d'environnement `DATABASE_URL` et `JWT_SECRET`
-3. Exécuter `npx prisma migrate deploy` (puis `npx prisma db seed` si souhaité)
-4. Déployer — aucun autre réglage nécessaire
+1. Créer une base PostgreSQL **managée et toujours disponible** (Neon recommandé, ou Supabase/Railway). La base Docker locale n'est **pas** accessible depuis un site déployé.
+2. Définir les variables d'environnement `DATABASE_URL` (celle de la base managée) et `JWT_SECRET`.
+3. Exécuter `npx prisma migrate deploy` puis `npx prisma db seed`.
+4. Déployer.
+
+> **Images de couverture** : l'upload écrit dans `public/uploads/`, ce qui fonctionne en local mais **pas sur Vercel** (système de fichiers en lecture seule). En production, brancher un stockage objet (Vercel Blob, Cloudinary ou Supabase Storage).
 
 ## 👥 L'équipe
 
