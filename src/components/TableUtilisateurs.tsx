@@ -63,14 +63,14 @@ export default function TableUtilisateurs({
   return (
     <div>
       {erreur && (
-        <p className="mb-4 rounded-lg bg-red-50 p-3 text-sm font-medium text-red-700 dark:bg-red-900/30 dark:text-red-300">
+        <p className="mb-4 border-l-2 border-accent bg-accent/5 p-3 text-sm font-medium text-accent">
           {erreur}
         </p>
       )}
-      <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-700">
-        <table className="w-full min-w-[700px] bg-white text-sm dark:bg-slate-800">
+      <div className="overflow-x-auto border border-ink">
+        <table className="w-full min-w-[700px] bg-surface text-sm">
           <thead>
-            <tr className="border-b border-slate-200 text-left text-xs uppercase tracking-wide text-slate-400 dark:border-slate-700">
+            <tr className="kicker border-b-2 border-ink text-left text-[10px] text-muted">
               <th className="px-4 py-3">Nom</th>
               <th className="px-4 py-3">E-mail</th>
               <th className="px-4 py-3">Rôle</th>
@@ -83,21 +83,14 @@ export default function TableUtilisateurs({
             {utilisateurs.map((u) => {
               const moi = u.id === monId;
               return (
-                <tr
-                  key={u.id}
-                  className="border-b border-slate-100 last:border-0 dark:border-slate-700/50"
-                >
+                <tr key={u.id} className="border-b border-rule last:border-0">
                   <td className="px-4 py-3 font-semibold">
                     {u.nom}
                     {moi && (
-                      <span className="ml-2 rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">
-                        vous
-                      </span>
+                      <span className="kicker ml-2 text-[10px] text-accent">vous</span>
                     )}
                   </td>
-                  <td className="px-4 py-3 text-slate-500 dark:text-slate-400">
-                    {u.email}
-                  </td>
+                  <td className="px-4 py-3 text-muted">{u.email}</td>
                   <td className="px-4 py-3">
                     {moi ? (
                       <span className="font-medium">{LABELS_ROLES[u.role]}</span>
@@ -106,7 +99,7 @@ export default function TableUtilisateurs({
                         value={u.role}
                         onChange={(e) => changerRole(u.id, e.target.value)}
                         aria-label={`Rôle de ${u.nom}`}
-                        className="rounded-lg border border-slate-300 bg-white px-2 py-1 text-sm dark:border-slate-600 dark:bg-slate-700"
+                        className="border border-ink bg-surface px-2 py-1 text-sm"
                       >
                         <option value="LECTEUR">Lecteur</option>
                         <option value="REDACTEUR">Rédacteur</option>
@@ -114,17 +107,17 @@ export default function TableUtilisateurs({
                       </select>
                     )}
                   </td>
-                  <td className="whitespace-nowrap px-4 py-3 text-xs text-slate-400">
-                    📝 {u._count.articles} · 💬 {u._count.commentaires}
+                  <td className="whitespace-nowrap px-4 py-3 text-xs text-muted">
+                    {u._count.articles} articles · {u._count.commentaires} comm.
                   </td>
-                  <td className="px-4 py-3 text-slate-500 dark:text-slate-400">
+                  <td className="px-4 py-3 text-muted">
                     {formatDateCourte(u.createdAt)}
                   </td>
                   <td className="px-4 py-3 text-right">
                     {!moi && (
                       <button
                         onClick={() => supprimer(u)}
-                        className="rounded-lg px-2.5 py-1.5 text-xs font-semibold text-red-600 transition-colors hover:bg-red-50 dark:hover:bg-red-900/30"
+                        className="text-xs font-semibold text-accent transition-colors hover:underline"
                       >
                         Supprimer
                       </button>
