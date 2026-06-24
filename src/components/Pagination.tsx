@@ -24,12 +24,12 @@ export default function Pagination({
   }
 
   const classes = (actif: boolean, desactive = false) =>
-    `rounded-lg px-3.5 py-2 text-sm font-medium transition-colors ${
+    `border px-3.5 py-2 text-sm font-medium transition-colors ${
       desactive
-        ? "pointer-events-none opacity-40"
+        ? "pointer-events-none border-rule text-muted opacity-40"
         : actif
-          ? "bg-blue-600 text-white"
-          : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-600 dark:hover:bg-slate-700"
+          ? "border-ink bg-ink text-paper"
+          : "border-ink bg-surface text-ink hover:bg-ink hover:text-paper"
     }`;
 
   return (
