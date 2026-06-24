@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const classChamp =
-  "w-full rounded-xl border border-slate-300 bg-white p-3 text-sm outline-none transition-colors focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:border-slate-600 dark:bg-slate-800 dark:focus:ring-blue-900";
+  "w-full border border-ink bg-surface p-3 text-sm outline-none transition-colors focus:border-accent focus:ring-1 focus:ring-accent";
 
 export default function FormulaireAuth({ mode }: { mode: "connexion" | "inscription" }) {
   const router = useRouter();
@@ -42,11 +42,11 @@ export default function FormulaireAuth({ mode }: { mode: "connexion" | "inscript
 
   return (
     <div className="mx-auto max-w-md px-4 py-16">
-      <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-700 dark:bg-slate-800">
-        <h1 className="text-2xl font-black tracking-tight">
+      <div className="border-2 border-ink bg-surface p-8">
+        <h1 className="border-b border-rule pb-3 font-display text-3xl font-black">
           {inscription ? "Créer un compte" : "Connexion"}
         </h1>
-        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+        <p className="mt-3 text-sm text-muted">
           {inscription
             ? "Rejoignez la communauté du journal pour commenter et réagir."
             : "Content de vous revoir !"}
@@ -103,7 +103,7 @@ export default function FormulaireAuth({ mode }: { mode: "connexion" | "inscript
           </div>
 
           {erreur && (
-            <p className="rounded-lg bg-red-50 p-3 text-sm font-medium text-red-700 dark:bg-red-900/30 dark:text-red-300">
+            <p className="border-l-2 border-accent bg-accent/5 p-3 text-sm font-medium text-accent">
               {erreur}
             </p>
           )}
@@ -111,7 +111,7 @@ export default function FormulaireAuth({ mode }: { mode: "connexion" | "inscript
           <button
             type="submit"
             disabled={envoi}
-            className="w-full rounded-xl bg-blue-600 py-3 text-sm font-bold text-white transition-colors hover:bg-blue-700 disabled:opacity-50"
+            className="kicker w-full bg-ink py-3 text-xs text-paper transition-colors hover:bg-accent disabled:opacity-50"
           >
             {envoi
               ? "Un instant…"
@@ -121,18 +121,18 @@ export default function FormulaireAuth({ mode }: { mode: "connexion" | "inscript
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-slate-500 dark:text-slate-400">
+        <p className="mt-6 text-center text-sm text-muted">
           {inscription ? (
             <>
               Déjà un compte ?{" "}
-              <Link href="/connexion" className="font-semibold text-blue-600 hover:underline dark:text-blue-400">
+              <Link href="/connexion" className="font-semibold text-accent hover:underline">
                 Se connecter
               </Link>
             </>
           ) : (
             <>
               Pas encore de compte ?{" "}
-              <Link href="/inscription" className="font-semibold text-blue-600 hover:underline dark:text-blue-400">
+              <Link href="/inscription" className="font-semibold text-accent hover:underline">
                 S&apos;inscrire
               </Link>
             </>
