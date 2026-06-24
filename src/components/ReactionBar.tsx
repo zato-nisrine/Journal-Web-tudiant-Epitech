@@ -55,19 +55,19 @@ export default function ReactionBar({
             onClick={() => reagir(r.type)}
             disabled={enCours}
             title={connecte ? r.label : "Connectez-vous pour réagir"}
-            className={`flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium transition-all ${
+            className={`flex items-center gap-2 border px-3 py-1.5 text-sm transition-all ${
               active
-                ? "border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300"
-                : "border-slate-200 bg-white text-slate-600 hover:border-blue-300 hover:bg-blue-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+                ? "border-accent bg-accent text-white"
+                : "border-ink bg-surface text-ink hover:border-accent hover:text-accent"
             } ${enCours ? "opacity-60" : ""}`}
           >
-            <span>{r.emoji}</span>
-            <span>{comptes[r.type] ?? 0}</span>
+            <span className="kicker text-[11px]">{r.label}</span>
+            <span className="font-semibold tabular-nums">{comptes[r.type] ?? 0}</span>
           </button>
         );
       })}
       {!connecte && (
-        <span className="ml-1 text-xs text-slate-400">
+        <span className="ml-1 text-xs text-muted">
           Connectez-vous pour réagir
         </span>
       )}
