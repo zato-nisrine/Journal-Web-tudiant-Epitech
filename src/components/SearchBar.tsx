@@ -25,12 +25,12 @@ export default function SearchBar() {
         onChange={(e) => setQ(e.target.value)}
         placeholder="Rechercher un article, un mot-clé…"
         aria-label="Rechercher"
-        className="w-full rounded-full border border-slate-300 bg-white py-2.5 pl-5 pr-12 text-sm shadow-sm outline-none transition-colors focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:border-slate-600 dark:bg-slate-800 dark:focus:ring-blue-900"
+        className="w-full border border-ink bg-surface py-2.5 pl-4 pr-12 text-sm outline-none transition-colors focus:border-accent focus:ring-1 focus:ring-accent"
       />
       <button
         type="submit"
         aria-label="Lancer la recherche"
-        className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-full bg-blue-600 p-2 text-white transition-colors hover:bg-blue-700"
+        className="absolute right-0 top-0 h-full bg-ink px-3 text-paper transition-colors hover:bg-accent"
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
           <circle cx="11" cy="11" r="7" />
