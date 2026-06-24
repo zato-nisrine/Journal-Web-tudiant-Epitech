@@ -47,13 +47,6 @@ export default async function PageArticle({ params }: Props) {
     if (!autorise) notFound();
   }
 
-  // Compteur de vues (best effort, sans bloquer le rendu)
-  if (article.publie) {
-    prisma.article
-      .update({ where: { id: article.id }, data: { vues: { increment: 1 } } })
-      .catch(() => {});
-  }
-
   const [commentaires, groupesReactions, maReaction, similaires] =
     await Promise.all([
       prisma.comment.findMany({
@@ -91,7 +84,6 @@ export default async function PageArticle({ params }: Props) {
           extrait: true,
           imageUrl: true,
           aLaUne: true,
-          vues: true,
           createdAt: true,
           auteur: { select: { id: true, nom: true } },
           categorie: { select: { id: true, nom: true, slug: true } },
@@ -114,59 +106,58 @@ export default async function PageArticle({ params }: Props) {
     <div className="mx-auto max-w-3xl px-4 py-10">
       <article>
         {/* En-tête */}
-        <div className="flex flex-wrap items-center gap-2 text-sm">
+        <div className="flex flex-wrap items-center gap-3 text-sm">
           <Link
             href={`/articles?categorie=${article.categorie.slug}`}
-            className="rounded-full bg-blue-50 px-3 py-1 font-semibold text-blue-700 hover:bg-blue-100 dark:bg-blue-900/40 dark:text-blue-300"
+            className="kicker text-xs text-accent hover:text-accent-hover"
           >
             {article.categorie.nom}
           </Link>
           {article.aLaUne && (
-            <span className="rounded-full bg-amber-400 px-3 py-1 font-bold text-amber-950">
-              ⭐ À la une
+            <span className="kicker bg-accent px-2 py-0.5 text-[11px] text-white">
+              À la une
             </span>
           )}
           {!article.publie && (
-            <span className="rounded-full bg-orange-100 px-3 py-1 font-bold text-orange-700 dark:bg-orange-900/40 dark:text-orange-300">
+            <span className="kicker border border-ink px-2 py-0.5 text-[11px] text-ink">
               Brouillon — non publié
             </span>
           )}
         </div>
 
-        <h1 className="mt-4 text-3xl font-black leading-tight tracking-tight sm:text-4xl">
+        <h1 className="mt-4 text-4xl font-black leading-[1.1] sm:text-5xl">
           {article.titre}
         </h1>
 
-        <div className="mt-4 flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400">
-          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 font-bold text-blue-700 dark:bg-blue-900/50 dark:text-blue-300">
-            {article.auteur.nom.charAt(0).toUpperCase()}
+        <div className="mt-5 flex items-center gap-2 border-y border-rule py-3 text-sm text-muted">
+          <span>
+            Par <span className="font-semibold text-ink">{article.auteur.nom}</span>
           </span>
-          <div>
-            <p className="font-semibold text-slate-700 dark:text-slate-200">
-              {article.auteur.nom}
-            </p>
-            <p>
-              {formatDate(article.createdAt)} · 👁 {article.vues} vues
-            </p>
-          </div>
+          <span>·</span>
+          <span>{formatDate(article.createdAt)}</span>
         </div>
 
         {/* Image de couverture */}
         {article.imageUrl && (
-          <div className="relative mt-8 aspect-[1.9] overflow-hidden rounded-2xl">
-            <Image
-              src={article.imageUrl}
-              alt={article.titre}
-              fill
-              priority
-              sizes="(max-width: 768px) 100vw, 768px"
-              className="object-cover"
-            />
-          </div>
+          <figure className="mt-8">
+            <div className="relative aspect-[1.9] overflow-hidden bg-rule">
+              <Image
+                src={article.imageUrl}
+                alt={article.titre}
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, 768px"
+                className="object-cover"
+              />
+            </div>
+            <figcaption className="mt-2 text-xs italic text-muted">
+              {article.categorie.nom} — {article.titre}
+            </figcaption>
+          </figure>
         )}
 
         {/* Contenu */}
-        <div className="prose-article mt-8 text-[1.05rem] text-slate-700 dark:text-slate-300">
+        <div className="prose-article mt-8 text-ink">
           {paragraphes.map((p, i) => (
             <p key={i}>{p}</p>
           ))}
@@ -174,7 +165,7 @@ export default async function PageArticle({ params }: Props) {
       </article>
 
       {/* Réactions + partage */}
-      <div className="mt-10 space-y-4 border-y border-slate-200 py-6 dark:border-slate-700">
+      <div className="mt-10 space-y-4 border-y-2 border-ink py-6">
         <ReactionBar
           articleId={article.id}
           initialComptes={comptes}
@@ -195,9 +186,9 @@ export default async function PageArticle({ params }: Props) {
 
       {/* Articles similaires */}
       {similaires.length > 0 && (
-        <section className="mt-14" aria-label="Articles similaires">
-          <h2 className="text-xl font-bold">Dans la même catégorie</h2>
-          <div className="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <section className="mt-14 border-t-2 border-ink pt-6" aria-label="Articles similaires">
+          <h2 className="kicker mb-6 text-sm">Dans la même rubrique</h2>
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {similaires.map((a) => (
               <ArticleCard key={a.id} article={a} />
             ))}
