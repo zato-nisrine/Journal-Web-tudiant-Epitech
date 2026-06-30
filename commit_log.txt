@@ -65,3 +65,4 @@
 2026-06-30 21:53:55 - fix hover effects
 2026-06-30 17:18:04 - fix mobile menu
 2026-07-02 13:43:47 - fix desktop layout
+2026-06-30 16:23:40 - fix responsive images
