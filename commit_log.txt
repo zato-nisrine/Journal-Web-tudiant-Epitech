@@ -79,3 +79,4 @@
 2026-07-02 19:49:46 - improve admin tables
 2026-07-01 04:16:13 - improve filter interface
 2026-06-30 15:53:00 - add sorting controls
+2026-06-30 23:15:14 - improve pagination controls
