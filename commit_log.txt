@@ -94,3 +94,4 @@
 2026-06-30 11:06:30 - improve animations
 2026-06-30 08:04:53 - polish homepage design
 2026-07-02 06:42:44 - improve article cards
+2026-06-30 20:27:00 - refactor reusable hooks
