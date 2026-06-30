@@ -62,3 +62,4 @@
 2026-07-02 11:39:38 - fix article spacing
 2026-06-30 14:08:39 - fix card alignment
 2026-07-02 18:58:40 - fix button styles
+2026-06-30 21:53:55 - fix hover effects
