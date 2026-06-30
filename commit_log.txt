@@ -84,3 +84,4 @@
 2026-07-01 08:24:05 - improve article editor layout
 2026-06-30 15:29:16 - fix theme persistence
 2026-07-01 04:06:51 - improve sidebar navigation
+2026-06-30 05:01:29 - update frontend documentation
