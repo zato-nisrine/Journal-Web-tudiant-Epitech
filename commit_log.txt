@@ -82,3 +82,4 @@
 2026-06-30 23:15:14 - improve pagination controls
 2026-06-30 11:21:40 - create article preview
 2026-07-01 08:24:05 - improve article editor layout
+2026-06-30 15:29:16 - fix theme persistence
