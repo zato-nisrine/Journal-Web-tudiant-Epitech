@@ -14,3 +14,4 @@
 2026-07-01 22:55:53 - add search filters UI
 2026-07-02 22:45:45 - create pagination component
 2026-07-02 07:35:37 - improve article grid layout
+2026-06-30 20:06:24 - add loading skeletons
