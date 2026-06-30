@@ -78,3 +78,4 @@
 2026-06-30 09:12:14 - create reusable spinner
 2026-07-02 19:49:46 - improve admin tables
 2026-07-01 04:16:13 - improve filter interface
+2026-06-30 15:53:00 - add sorting controls
