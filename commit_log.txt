@@ -11,3 +11,4 @@
 2026-07-02 04:05:09 - design article details page
 2026-07-02 22:37:42 - implement category cards
 2026-07-01 16:11:31 - create search bar component
+2026-07-01 22:55:53 - add search filters UI
