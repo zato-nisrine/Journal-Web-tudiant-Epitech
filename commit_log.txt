@@ -85,3 +85,4 @@
 2026-06-30 15:29:16 - fix theme persistence
 2026-07-01 04:06:51 - improve sidebar navigation
 2026-06-30 05:01:29 - update frontend documentation
+2026-07-01 16:47:53 - clean project structure
