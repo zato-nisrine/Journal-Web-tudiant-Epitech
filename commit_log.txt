@@ -46,3 +46,4 @@
 2026-07-02 10:26:25 - create category badges
 2026-07-02 11:32:56 - improve article tags
 2026-06-30 03:17:19 - refactor card components
+2026-07-01 08:17:37 - optimize image rendering
