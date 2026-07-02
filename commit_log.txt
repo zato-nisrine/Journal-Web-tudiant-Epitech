@@ -44,3 +44,4 @@
 2026-07-02 17:23:57 - add keyboard navigation
 2026-07-02 09:30:06 - improve focus states
 2026-07-02 10:26:25 - create category badges
+2026-07-02 11:32:56 - improve article tags
