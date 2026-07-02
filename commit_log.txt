@@ -34,3 +34,4 @@
 2026-06-30 18:39:59 - improve admin responsiveness
 2026-07-02 11:56:42 - refactor reusable buttons
 2026-07-02 09:08:29 - create modal component
+2026-07-02 04:31:22 - add confirmation dialog
