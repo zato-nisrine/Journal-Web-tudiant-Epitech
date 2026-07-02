@@ -8,3 +8,4 @@
 2026-07-02 14:04:43 - add dark mode toggle
 2026-07-01 00:03:00 - improve dark mode styles
 2026-06-30 03:17:01 - create article card component
+2026-07-02 04:05:09 - design article details page
