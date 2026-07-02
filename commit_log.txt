@@ -59,3 +59,4 @@
 2026-07-02 19:51:59 - refactor typography styles
 2026-07-02 07:07:25 - add avatar component
 2026-06-30 09:55:41 - improve profile display
+2026-07-02 11:39:38 - fix article spacing
