@@ -30,3 +30,4 @@
 2026-06-30 03:44:02 - design statistics cards
 2026-07-02 15:37:02 - create sidebar navigation
 2026-07-01 19:20:09 - add user management table
+2026-07-02 14:42:10 - create article management table
