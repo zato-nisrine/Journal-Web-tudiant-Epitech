@@ -5,3 +5,4 @@
 2026-07-01 21:26:19 - create footer component
 2026-06-30 10:12:07 - setup global styles
 2026-07-02 21:57:37 - configure Tailwind utilities
+2026-07-02 14:04:43 - add dark mode toggle
