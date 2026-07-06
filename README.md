@@ -50,7 +50,7 @@ npm run dev
 
 Le site est disponible sur [http://localhost:3000](http://localhost:3000).
 
-### Comptes initiaux
+### Comptes initiaux 
 
 Le seed crée uniquement les catégories et deux comptes (aucune donnée de démonstration) :
 
