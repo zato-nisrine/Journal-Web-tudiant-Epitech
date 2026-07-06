@@ -17,7 +17,10 @@ export default function BoutonSupprimerArticle({
     if (!confirm(`Supprimer définitivement « ${titre} » ?`)) return;
     setEnCours(true);
     try {
-      const res = await fetch(`/api/articles/${articleId}`, { method: "DELETE" });
+      const res = await fetch(`/api/articles/${articleId}`, {
+        method: "DELETE",
+        credentials: "same-origin",
+      });
       if (res.ok) router.refresh();
       else {
         const data = await res.json();
