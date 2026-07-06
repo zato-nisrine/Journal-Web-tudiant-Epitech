@@ -3,6 +3,7 @@ import { randomUUID } from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { put } from "@vercel/blob";
+import { v2 as cloudinary } from "cloudinary";
 import { getSession, peutRediger } from "@/lib/auth";
 
 export const runtime = "nodejs";
@@ -50,6 +51,33 @@ export async function POST(req: NextRequest) {
 
   const buffer = Buffer.from(await fichier.arrayBuffer());
   const nom = `${randomUUID()}.${extension}`;
+
+  // Si Cloudinary est configuré via les variables d'environnement, on l'utilise
+  if (
+    process.env.CLOUDINARY_CLOUD_NAME &&
+    process.env.CLOUDINARY_API_KEY &&
+    process.env.CLOUDINARY_API_SECRET
+  ) {
+    cloudinary.config({
+      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY,
+      api_secret: process.env.CLOUDINARY_API_SECRET,
+      secure: true,
+    });
+
+    const dataUri = `data:${fichier.type};base64,${buffer.toString("base64")}`;
+    try {
+      const result = await cloudinary.uploader.upload(dataUri, {
+        folder: "journal",
+        public_id: nom.replace(/\.[^/.]+$/, ""),
+        resource_type: "image",
+      });
+      return NextResponse.json({ url: result.secure_url }, { status: 201 });
+    } catch (err) {
+      console.error("Cloudinary upload error", err);
+      return NextResponse.json({ erreur: "Échec de l'upload vers Cloudinary" }, { status: 500 });
+    }
+  }
 
   // En production (Vercel), le système de fichiers est en lecture seule :
   // si un stockage objet est configuré, on l'utilise. Sinon, écriture locale.
