@@ -30,7 +30,7 @@ export default function Footer() {
         <div>
           <p className="kicker text-xs text-muted">La rédaction</p>
           <p className="mt-3 text-sm leading-relaxed text-muted">
-            Nisrine Zato · Brandon Houssou · Justice H. · Theophore B. · Harys S.
+            Nisrine Zato · Brandon Houssou · Justice H. · Theophore B. · Harys S. · Shaddy A.
           </p>
         </div>
       </div>
