@@ -3,13 +3,15 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --paper: #f2f4f8; /* blanc Epitech */
+  --paper: #ffffff; /* blanc */
   --surface: #ffffff; /* feuille */
   --ink: #181818; /* noir Epitech */
   --muted: #5f6672; /* gris froid */
   --rule: #d5dae3; /* filets */
   --accent: #013afb; /* bleu Epitech */
   --accent-hover: #0030cf;
+  --accent2: #ff5f3a; /* orange, couleur d'accent secondaire */
+  --accent2-hover: #e8481f;
 }
 
 .dark {
@@ -20,6 +22,8 @@
   --rule: #232a3d;
   --accent: #5a86ff; /* bleu Epitech éclairci pour le fond sombre */
   --accent-hover: #7c9eff;
+  --accent2: #ff8261; /* orange éclairci pour le fond sombre */
+  --accent2-hover: #ff6b41;
 }
 
 @theme inline {
@@ -30,6 +34,8 @@
   --color-rule: var(--rule);
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
+  --color-accent2: var(--accent2);
+  --color-accent2-hover: var(--accent2-hover);
 
   --color-background: var(--paper);
   --color-foreground: var(--ink);
