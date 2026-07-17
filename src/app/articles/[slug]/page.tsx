@@ -61,13 +61,13 @@ export default async function PageArticle({ params }: Props) {
       }),
       utilisateur
         ? prisma.reaction.findUnique({
-            where: {
-              userId_articleId: {
-                userId: utilisateur.id,
-                articleId: article.id,
-              },
+          where: {
+            userId_articleId: {
+              userId: utilisateur.id,
+              articleId: article.id,
             },
-          })
+          },
+        })
         : null,
       prisma.article.findMany({
         where: {
@@ -109,7 +109,7 @@ export default async function PageArticle({ params }: Props) {
         <div className="flex flex-wrap items-center gap-3 text-sm">
           <Link
             href={`/articles?categorie=${article.categorie.slug}`}
-            className="kicker text-xs text-accent hover:text-accent-hover"
+            className="kicker rounded-full bg-accent2/10 px-2.5 py-1 text-xs text-accent2 transition-colors hover:bg-accent2 hover:text-white"
           >
             {article.categorie.nom}
           </Link>

@@ -45,7 +45,7 @@ export default function ArticleCard({ article }: { article: ArticleResume }) {
       <div className="mt-3 flex items-center gap-2 text-xs">
         <Link
           href={`/articles?categorie=${article.categorie.slug}`}
-          className="kicker text-[11px] text-accent hover:text-accent-hover"
+          className="kicker rounded-full bg-accent2/10 px-2.5 py-1 text-[11px] text-accent2 transition-colors hover:bg-accent2 hover:text-white"
         >
           {article.categorie.nom}
         </Link>
