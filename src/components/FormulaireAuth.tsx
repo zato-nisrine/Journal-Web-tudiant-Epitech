@@ -111,7 +111,7 @@ export default function FormulaireAuth({ mode }: { mode: "connexion" | "inscript
           <button
             type="submit"
             disabled={envoi}
-            className="kicker w-full bg-ink py-3 text-xs text-paper transition-colors hover:bg-accent disabled:opacity-50"
+            className="kicker w-full bg-accent2 py-3 text-xs text-paper transition-colors hover:bg-accent2-hover disabled:opacity-50"
           >
             {envoi
               ? "Un instant…"

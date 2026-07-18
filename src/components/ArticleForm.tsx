@@ -236,7 +236,7 @@ export default function ArticleForm({
         <button
           type="submit"
           disabled={envoi}
-          className="kicker bg-ink px-5 py-2.5 text-xs text-paper transition-colors hover:bg-accent disabled:opacity-50"
+          className="kicker bg-accent2 px-5 py-2.5 text-xs text-paper transition-colors hover:bg-accent2-hover disabled:opacity-50"
         >
           {envoi ? "Enregistrement…" : article ? "Enregistrer les modifications" : "Créer l'article"}
         </button>

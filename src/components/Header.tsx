@@ -52,7 +52,7 @@ export default async function Header() {
                 </Link>
                 <Link
                   href="/inscription"
-                  className="font-semibold text-accent hover:text-accent-hover"
+                  className="kicker rounded-full bg-accent2 px-3 py-1.5 text-[11px] text-white transition-colors hover:bg-accent2-hover"
                 >
                   S&apos;inscrire
                 </Link>
